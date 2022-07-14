@@ -1,58 +1,73 @@
-//
-//  ViewController.swift
-//  Calculator
-//
-//  Created by Ilya Dombrovsky on 12.07.22.
-//
-
 import UIKit
 
 class ViewController: UIViewController {
-    var stillTyping = false
-    var firstNum: Double = 0
-    var mathSign = false
-    
+    var numberOfScrean: Double = 0
+    var firstNumber: Double = 0
+    var mathSince: Bool = false
+    var  calculationResult: Int = 0
+    var lol = 0.0
+
+    @IBOutlet weak var resultt: UILabel!
     @IBAction func digits(_ sender: UIButton) {
-        
-        if mathSign == true {
-            result.text = String(sender.tag)
-            mathSign = false
-            
+        if mathSince == true {
+            resultt.text = String(sender.tag)
+            mathSince = false
         }
-        
-        let number = String(sender.tag)
-        
-        if number == "0" && result.text == "0" {
-            stillTyping = false
-        } else {
-            if stillTyping {
-                if result.text!.count < 9 {
-                    result.text! += number
-                }
-            } else {
-                result.text = number
-                stillTyping = true
-            }
+        else {
+        resultt.text! += String(sender.tag)
         }
+        numberOfScrean = Double(resultt.text!)!
+    }
+    
+    
+    @IBAction func crushingInNumber(_ sender: UIButton) {
+    
     }
     
     @IBAction func buttons(_ sender: UIButton) {
-        if result.text != "" {
+        if resultt.text != "" && sender.tag != 10 && sender.tag != 15 {
+            firstNumber = Double(resultt.text!)!
+           
             if sender.tag == 11 {
-                
-            } else if sender.tag == 12 {
-                
-            } else if sender.tag == 13 {
-                
-            } else if sender.tag == 14 {
-                result.text = "+"
+                resultt.text = "/"
+            }
+            else if sender.tag == 12 {
+                resultt.text = "*"
+            }
+            else if sender.tag == 13 {
+                resultt.text = "-"
+            }
+            else if sender.tag == 14 {
+                resultt.text = "+"
+            }
+           else if sender.tag == 16 {
+     //         result.text = String(format: "%.1f", firstNumber)
+           }
+    
+            calculationResult = sender.tag
+            mathSince = true
+        }
+        else if sender.tag == 15 {
+            if calculationResult == 11 {
+                resultt.text = String(firstNumber / numberOfScrean)
+            }
+            else if calculationResult == 12 {
+                resultt.text = String(firstNumber * numberOfScrean)
+            }
+            else if calculationResult == 13 {
+                resultt.text = String(firstNumber - numberOfScrean)
+            }
+            else if calculationResult == 14 {
+                resultt.text = String(firstNumber + numberOfScrean)
             }
         }
+        else if sender.tag == 10 {
+            resultt.text = String("")
+            firstNumber = 0
+            numberOfScrean = 0
+            calculationResult = 0
+        }
     }
-    @IBOutlet weak var result: UILabel!
-    
-    
-    
     
     
     override func viewDidLoad() {
@@ -62,4 +77,3 @@ class ViewController: UIViewController {
     
     
 }
-
